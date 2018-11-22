@@ -304,6 +304,121 @@ void MyString::clear() noexcept
 	{
 		this->m_size = 0;
 		delete[] this->m_pch;
+		this->m_pch = NULL;
+	}
+}
+
+bool MyString::empty() const
+{
+	return this->m_size == 0;
+}
+
+void MyString::shrink_to_fit()
+{
+	this->m_reserved_size = ((int)(this->m_size / (DEFAULT_ADD_RESERVER_SIZE + 1)))*(DEFAULT_ADD_RESERVER_SIZE + 1) + DEFAULT_ADD_RESERVER_SIZE + 1;
+	char* m_pchnew = new char[this->m_reserved_size];
+	for (int i = 0; i < this->m_size; i++)
+	{
+		m_pchnew[i] = this->m_pch[i];
+	}
+	m_pchnew[this->m_size] = '\0';
+	delete[] this->m_pch;
+	this->m_pch = m_pchnew;
+}
+
+char & MyString::operator[](size_t pos)
+{
+	if (pos >= 0 && pos <= this->m_size)
+	{
+		return this->m_pch[pos];
+	}
+	else
+	{
+		throw;
+	}
+}
+
+const char & MyString::operator[](size_t pos) const
+{
+	if (pos >= 0 && pos <= this->m_size)
+	{
+		return this->m_pch[pos];
+	}
+	else
+	{
+		throw;
+	}
+}
+
+char & MyString::at(size_t pos)
+{
+	if (pos >= 0 && pos < this->m_size)
+	{
+		return this->m_pch[pos];
+	}
+	else
+	{
+		throw;
+	}
+}
+
+const char & MyString::at(size_t pos) const
+{
+	if (pos >= 0 && pos < this->m_size)
+	{
+		return this->m_pch[pos];
+	}
+	else
+	{
+		throw;
+	}
+}
+
+char & MyString::back()
+{
+	if (!this->empty())
+	{
+		return this->m_pch[this->m_size - 1];
+	}
+	else
+	{
+		throw;
+	}
+}
+
+const char & MyString::back() const
+{
+	if (!this->empty())
+	{
+		return this->m_pch[this->m_size - 1];
+	}
+	else
+	{
+		throw;
+	}
+}
+
+char & MyString::front()
+{
+	if (!this->empty())
+	{
+		return this->m_pch[0];
+	}
+	else
+	{
+		throw;
+	}
+}
+
+const char & MyString::front() const
+{
+	if (!this->empty())
+	{
+		return this->m_pch[0];
+	}
+	else
+	{
+		throw;
 	}
 }
 

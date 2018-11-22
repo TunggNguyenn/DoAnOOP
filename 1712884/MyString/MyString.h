@@ -55,6 +55,18 @@ public:
 	size_t capacity() const noexcept;
 	void reserve(size_t n = 0);
 	void clear() noexcept;
+	bool empty() const;
+	void shrink_to_fit();
+
+	//Element access
+	char& operator[](size_t pos);
+	const char& operator[](size_t pos) const;
+	char& at(size_t pos);
+	const char& at(size_t pos) const;
+	char& back();
+	const char& back() const;
+	char& front();
+	const char& front() const;
 
 
 	friend ostream& operator<<(ostream& os, const MyString& str);

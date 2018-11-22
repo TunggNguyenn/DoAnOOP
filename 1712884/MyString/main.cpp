@@ -49,18 +49,11 @@ int main()
 	//std::cout << "\ns4: " << s4 << "\ns5: " << s5 << "\ns6a: " << s6a;
 	//std::cout << "\ns6b: " << s6b <<  '\n';
 
-	//char c;
-	//MyString str;
-	//std::cout << "Please type some lines of text. Enter a dot (.) to finish:\n";
-	//do {
-	//	c = std::cin.get();
-	//	str += c;
-	//	if (c == '\n')
-	//	{
-	//		std::cout << str;
-	//		str.clear();
-	//	}
-	//} while (c != '.');
+	MyString str("test string");
+	str.front() = 'T';
+	std::cout << str << '\n';
+
+
 	system("pause");
 	return 0;
 }
