@@ -220,17 +220,21 @@ void MyString::resize(size_t n)
 			{
 				p_chnew[i] = 0;
 			}
-			p_chnew[n] = '\n';
+			p_chnew[n] = '\0';
 			delete[] this->m_pch;
 			this->m_pch = p_chnew;
 		}
 		this->m_size = n;
 	}
-	else if (n < this->m_size)
+	else if (n < this->m_size&&n >= 0)
 	{
 		this->m_pch[this->m_size] = 0;
 		this->m_size = n;
 		this->m_pch[this->m_size] = '\0';
+	}
+	else if (n < 0)
+	{
+		throw;
 	}
 }
 
@@ -259,17 +263,21 @@ void MyString::resize(size_t n, char c)
 			{
 				p_chnew[i] = c;
 			}
-			p_chnew[n] = '\n';
+			p_chnew[n] = '\0';
 			delete[] this->m_pch;
 			this->m_pch = p_chnew;
 		}
 		this->m_size = n;
 	}
-	else
+	else if (n <= this->m_size&&n >= 0)
 	{
 		this->m_pch[this->m_size] = 0;
 		this->m_size = n;
 		this->m_pch[this->m_size] = '\0';
+	}
+	else if (n < 0)
+	{
+		throw;
 	}
 }
 
@@ -288,7 +296,7 @@ void MyString::reserve(size_t n)
 		{
 			m_pchnew[i] = this->m_pch[i];
 		}
-		this->m_pch[this->m_size] = '\n';
+		this->m_pch[this->m_size] = '\0';
 		delete[] this->m_pch;
 		this->m_pch = m_pchnew;
 	}
@@ -421,6 +429,249 @@ const char & MyString::front() const
 		throw;
 	}
 }
+
+MyString & MyString::operator+=(const MyString & str)
+{
+	if (str.m_size < (this->m_reserved_size - this->m_size))
+	{
+		for (int i = 0; i < str.m_size; i++)
+		{
+			this->m_pch[this->m_size + i] = str[i];
+		}
+		this->m_size += str.m_size;
+		this->m_pch[this->m_size] = '\0';
+	}
+	else
+	{
+		int m_pch_size = this->m_size;
+		this->resize(this->m_size + str.m_size);
+		for (int i = 0; i < str.m_size; i++)
+		{
+			this->m_pch[m_pch_size + i] = str[i];
+		}
+		this->m_pch[this->m_size] = '\0';
+	}
+	return *this;
+}
+
+MyString & MyString::operator+=(const char * s)
+{
+	int str_size = lengthString(s);
+	if (str_size < (this->m_reserved_size - this->m_size))
+	{
+		for (int i = 0; i < str_size; i++)
+		{
+			this->m_pch[this->m_size + i] = s[i];
+		}
+		this->m_size += str_size;
+		this->m_pch[this->m_size] = '\0';
+	}
+	else
+	{
+		int m_pch_size = this->m_size;
+		this->resize(this->m_size + str_size);
+		for (int i = 0; i < str_size; i++)
+		{
+			this->m_pch[m_pch_size + i] = s[i];
+		}
+		this->m_pch[this->m_size] = '\0';
+	}
+	return *this;
+}
+
+MyString & MyString::operator+=(char c)
+{
+	if (1 < (this->m_reserved_size - this->m_size))
+	{
+		this->m_pch[this->m_size] = c;
+		this->m_size++;
+		this->m_pch[this->m_size] = '\0';
+	}
+	else
+	{
+		this->resize(this->m_size + 1);
+		this->m_pch[this->m_size - 1] = c;
+		this->m_pch[this->m_size] = '\0';
+	}
+	return *this;
+}
+
+MyString & MyString::append(const MyString & str)
+{
+	return this->operator+=(str);
+}
+
+MyString & MyString::append(const MyString & str, size_t subpos, size_t sublen)
+{
+	if (subpos <= str.m_size)
+	{
+		char *m_pch_append;
+		if (sublen != -1 && sublen >= 0 && (sublen <= (str.m_size - subpos)))
+		{
+			m_pch_append = new char[sublen + 1];
+			for (int i = 0; i < sublen; i++)
+			{
+				m_pch_append[i] = str[subpos + i];
+			}
+			m_pch_append[sublen] = '\0';
+		}
+		else
+		{
+			m_pch_append = new char[str.m_size - subpos + 1];
+			for (int i = 0; i < str.m_size - subpos + 1; i++)
+			{
+				m_pch_append[i] = str[subpos + i];
+			}
+			m_pch_append[str.m_size - subpos] = '\0';
+		}
+		this->operator+=(m_pch_append);
+		if (m_pch_append != NULL)
+		{
+			delete[] m_pch_append;
+		}
+		return *this;
+	}
+	else
+	{
+		throw;
+	}
+}
+
+MyString & MyString::append(const char * s)
+{
+	return this->operator+=(s);
+}
+
+MyString & MyString::append(const char * s, size_t n)
+{
+	if (n > 0)
+	{
+		char *m_pch_append = new char[n + 1];
+		for (int i = 0; i < n; i++)
+		{
+			m_pch_append[i] = s[i];
+		}
+		m_pch_append[n] = '\0';
+		this->operator+=(m_pch_append);
+		if (m_pch_append != NULL)
+		{
+			delete[] m_pch_append;
+		}
+		return *this;
+	}
+	else if (n < 0)
+	{
+		throw;
+	}
+	else
+	{
+		return *this;
+	}
+}
+
+MyString & MyString::append(size_t n, char c)
+{
+	if (n > 0)
+	{
+		char *m_pch_append = new char[n + 1];
+		for (int i = 0; i < n; i++)
+		{
+			m_pch_append[i] = c;
+		}
+		m_pch_append[n] = '\0';
+		this->operator+=(m_pch_append);
+		if (m_pch_append != NULL)
+		{
+			delete[] m_pch_append;
+		}
+		return *this;
+	}
+	else if (n < 0)
+	{
+		throw;
+	}
+	else
+	{
+		return *this;
+	}
+}
+
+void MyString::push_back(char c)
+{
+	this->operator+=(c);
+}
+
+MyString & MyString::assign(const MyString & str)
+{
+	if (this->m_size == 0)
+	{
+		return this->append(str);
+	}
+	else
+	{
+		this->m_pch[this->m_size] = 0;
+		this->m_size = 0;
+		return this->append(str);
+	}
+}
+
+MyString & MyString::assign(const MyString & str, size_t subpos, size_t sublen)
+{
+	if (this->m_size == 0)
+	{
+		return this->append(str, subpos, sublen);
+	}
+	else
+	{
+		this->m_pch[this->m_size] = 0;
+		this->m_size = 0;
+		return this->append(str, subpos, sublen);
+	}
+}
+
+MyString & MyString::assign(const char * s)
+{
+	if (this->m_size == 0)
+	{
+		return this->append(s);
+	}
+	else
+	{
+		this->m_pch[this->m_size] = 0;
+		this->m_size = 0;
+		return this->append(s);
+	}
+}
+
+MyString & MyString::assign(const char * s, size_t n)
+{
+	if (this->m_size == 0)
+	{
+		return this->append(s, n);
+	}
+	else
+	{
+		this->m_pch[this->m_size] = 0;
+		this->m_size = 0;
+		return this->append(s, n);
+	}
+}
+
+MyString & MyString::assign(size_t n, char c)
+{
+	if (this->m_size == 0)
+	{
+		return this->append(n, c);
+	}
+	else
+	{
+		this->m_pch[this->m_size] = 0;
+		this->m_size = 0;
+		return this->append(n, c);
+	}
+}
+
+
 
 
 

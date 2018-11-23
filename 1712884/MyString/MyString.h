@@ -68,6 +68,25 @@ public:
 	char& front();
 	const char& front() const;
 
+	//Modifiers
+	MyString& operator+=(const MyString& str);  //string(1)
+	MyString& operator+=(const char* s);  //c-string(2)
+	MyString& operator+=(char c);  //character(3)
+	MyString& append(const MyString& str);  //string(1)
+	MyString& append(const MyString& str, size_t subpos, size_t sublen = npos);  //substring(2)
+	MyString& append(const char* s);  //c-string
+	MyString& append(const char* s, size_t n);  //buffer(4)
+	MyString& append(size_t n, char c);  //fill(5)
+	//template<class InputIterator>
+	//MyString& append(InputIterator first, InputIterator last);  //range(6)
+	void push_back(char c);
+	MyString& assign(const MyString& str);  //string(1)
+	MyString& assign(const MyString& str, size_t subpos, size_t sublen = npos);  //substring(2)
+	MyString& assign(const char* s);  //c-string(3)
+	MyString& assign(const char* s, size_t n);  //buffer(4)
+	MyString& assign(size_t n, char c);  //fill(5)
+	//template<class InputIterator>
+	//MyString& assign(InputIterator first, InputIterator last);  //range(6)
 
 	friend ostream& operator<<(ostream& os, const MyString& str);
 	friend istream& operator>>(istream& is, MyString& str);
