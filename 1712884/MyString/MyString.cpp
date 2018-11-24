@@ -40,41 +40,60 @@ MyString::MyString(const MyString & str)
 
 MyString::MyString(const MyString & str, size_t pos, size_t len)
 {
-	if (len != -1)
+	if (pos >= 0 && pos <= str.m_size)
 	{
-		if (len <= DEFAULT_ADD_RESERVER_SIZE)
+		if (len != (pow(2, 32) - 1))
 		{
-			this->m_reserved_size = DEFAULT_ADD_RESERVER_SIZE + 1;
+			if (pos != str.m_size && (len <= str.m_size - pos))
+			{
+				this->m_size = len;
+			}
+			else if (len > (str.m_size - pos))
+			{
+				this->m_size = str.m_size - pos;
+			}
+			else if (pos == str.m_size)
+			{
+				this->m_size = 0;
+			}
+			if (this->m_size <= DEFAULT_ADD_RESERVER_SIZE)
+			{
+				this->m_reserved_size = DEFAULT_ADD_RESERVER_SIZE + 1;
+			}
+			else
+			{
+				this->m_reserved_size = ((int)(this->m_size / (DEFAULT_ADD_RESERVER_SIZE + 1)))*(DEFAULT_ADD_RESERVER_SIZE + 1) + DEFAULT_ADD_RESERVER_SIZE + 1;
+			}
+
+			this->m_pch = new char[this->m_reserved_size];
+			for (int i = 0; i < this->m_size; i++)
+			{
+				this->m_pch[i] = str.m_pch[pos + i];
+			}
+			this->m_pch[this->m_size] = '\0';
 		}
 		else
 		{
-			this->m_reserved_size = ((int)(len / (DEFAULT_ADD_RESERVER_SIZE + 1)))*(DEFAULT_ADD_RESERVER_SIZE + 1) + DEFAULT_ADD_RESERVER_SIZE + 1;
+			if ((str.m_size - pos) <= DEFAULT_ADD_RESERVER_SIZE)
+			{
+				this->m_reserved_size = DEFAULT_ADD_RESERVER_SIZE + 1;
+			}
+			else
+			{
+				this->m_reserved_size = ((int)((str.m_size - pos) / (DEFAULT_ADD_RESERVER_SIZE + 1)))*(DEFAULT_ADD_RESERVER_SIZE + 1) + DEFAULT_ADD_RESERVER_SIZE + 1;
+			}
+			this->m_size = str.m_size - pos;
+			this->m_pch = new char[this->m_reserved_size];
+			for (int i = 0; i < this->m_size; i++)
+			{
+				this->m_pch[i] = str.m_pch[pos + i];
+			}
+			this->m_pch[this->m_size] = '\0';
 		}
-		this->m_size = len;
-		this->m_pch = new char[this->m_reserved_size];
-		for (int i = 0; i < this->m_size; i++)
-		{
-			this->m_pch[i] = str.m_pch[pos + i];
-		}
-		this->m_pch[this->m_size] = '\0';
 	}
 	else
 	{
-		if (len <= DEFAULT_ADD_RESERVER_SIZE)
-		{
-			this->m_reserved_size = DEFAULT_ADD_RESERVER_SIZE + 1;
-		}
-		else
-		{
-			this->m_reserved_size = ((int)(len / (DEFAULT_ADD_RESERVER_SIZE + 1)))*(DEFAULT_ADD_RESERVER_SIZE + 1) + DEFAULT_ADD_RESERVER_SIZE + 1;
-		}
-		this->m_size = str.m_size - pos + 1;
-		this->m_pch = new char[this->m_reserved_size];
-		for (int i = 0; i < this->m_size; i++)
-		{
-			this->m_pch[i] = str.m_pch[pos + i];
-		}
-		this->m_pch[this->m_size] = '\0';
+		throw;
 	}
 }
 
@@ -506,7 +525,7 @@ MyString & MyString::append(const MyString & str, size_t subpos, size_t sublen)
 	if (subpos <= str.m_size)
 	{
 		char *m_pch_append;
-		if (sublen != -1 && sublen >= 0 && (sublen <= (str.m_size - subpos)))
+		if ((sublen != (pow(2, 32) - 1)) && sublen >= 0 && (sublen <= (str.m_size - subpos)))
 		{
 			m_pch_append = new char[sublen + 1];
 			for (int i = 0; i < sublen; i++)
@@ -547,7 +566,7 @@ MyString & MyString::append(const char * s, size_t n)
 	if (n > 0)
 	{
 		char *m_pch_append = new char[n + 1];
-		for (int i = 0; i < n; i++)
+		for (int i = 0; i < lengthString(s); i++)
 		{
 			m_pch_append[i] = s[i];
 		}
@@ -668,6 +687,91 @@ MyString & MyString::assign(size_t n, char c)
 		this->m_pch[this->m_size] = 0;
 		this->m_size = 0;
 		return this->append(n, c);
+	}
+}
+
+MyString & MyString::insert(size_t pos, const MyString & str)
+{
+	if (pos <= this->m_size)
+	{
+		MyString MyString_Insert(*this, pos);
+		this->m_pch[this->m_size] = 0;
+		this->m_size = pos;
+		this->append(str);
+		this->append(MyString_Insert);
+		return *this;
+	}
+	else
+	{
+		throw;
+	}
+}
+
+MyString & MyString::insert(size_t pos, const MyString & str, size_t subpos, size_t sublen)
+{
+	if (pos <= this->m_size)
+	{
+		MyString MyString_Insert(*this, pos);
+		this->m_pch[this->m_size] = 0;
+		this->m_size = pos;
+		this->append(str, subpos, sublen);
+		this->append(MyString_Insert);
+		return *this;
+	}
+	else
+	{
+		throw;
+	}
+}
+
+MyString & MyString::insert(size_t pos, const char * s)
+{
+	if (pos <= this->m_size)
+	{
+		MyString MyString_Insert(*this, pos);
+		this->m_pch[this->m_size] = 0;
+		this->m_size = pos;
+		this->append(s);
+		this->append(MyString_Insert);
+		return *this;
+	}
+	else
+	{
+		throw;
+	}
+}
+
+MyString & MyString::insert(size_t pos, const char * s, size_t n)
+{
+	if (pos <= this->m_size)
+	{
+		MyString MyString_Insert(*this, pos);
+		this->m_pch[this->m_size] = 0;
+		this->m_size = pos;
+		this->append(s, n);
+		this->append(MyString_Insert);
+		return *this;
+	}
+	else
+	{
+		throw;
+	}
+}
+
+MyString & MyString::insert(size_t pos, size_t n, char c)
+{
+	if (pos <= this->m_size)
+	{
+		MyString MyString_Insert(*this, pos);
+		this->m_pch[this->m_size] = 0;
+		this->m_size = pos;
+		this->append(n, c);
+		this->append(MyString_Insert);
+		return *this;
+	}
+	else
+	{
+		throw;
 	}
 }
 

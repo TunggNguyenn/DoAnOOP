@@ -1,7 +1,51 @@
 #include "MyString.h"
-#include <string>
+
 int main()
 {
+	//MyString str;
+	//cout << str << endl;
+	//cout << str.size() << endl;
+	//cout << str.capacity() << endl;
+	//cout << "-----------" << endl;
+	//MyString str2 = "the ";
+	//MyString str3 = "or not to bett";
+
+
+	//// used in the same order as described above:
+	//str.insert(0, str2);                 // to be (the )question
+	//cout << str << endl;
+	//cout << str.size() << endl;
+	//cout << str.capacity() << endl;
+	//cout << "-----------" << endl;
+
+	//str.insert(4, str3, 3, 20);             // to be (not )the question
+	//cout << str << endl;
+	//cout << str.size() << endl;
+	//cout << str.capacity() << endl;
+	//cout << "-----------" << endl;
+
+	//str.insert(10, "that is cool", 90);    // to be not (that is )the question
+	//cout << str << endl;
+	//cout << str.size() << endl;
+	//cout << str.capacity() << endl;
+	//cout << "-----------" << endl;
+
+	//str.insert(10, "to be t");            // to be not (to be )that is the question
+	//cout << str << endl;
+	//cout << str.size() << endl;
+	//cout << str.capacity() << endl;
+	//cout << "-----------" << endl;
+
+	//str.insert(15, 16, ':');               // to be not to be(:) that is the question
+	//cout << str << endl;
+	//cout << str.size() << endl;
+	//cout << str.capacity() << endl;
+	//cout << "-----------" << endl;
+
+
+
+	//std::cout << str << '\n';
+	/////////////////////////////////////////////////////////////////////////////////////////
 //	MyString str1, str2, str3;
 //	str1 = "Test string: ";   // c-string
 //	str2 = 'x';               // single character
@@ -60,27 +104,6 @@ int main()
 	//cout << name.size() << endl;
 	//cout << name.capacity() << endl;
 
-	//MyString s{ "tung" };
-	//s.resize(15);
-	//cout << s.size() << endl;
-	//cout << s.capacity() << endl;
-	//cout << "---" << endl;
-	//MyString l{ "17ctt7" };
-	//cout << l.size() << endl;
-	//cout << l.capacity() << endl;
-	//cout << "---" << endl;
-	//l.resize(1);
-	//l.resize(18);
-	//cout << l.size() << endl;
-	//cout << l.capacity() << endl;
-	//cout << "---" << endl;
-	//s += l;
-	//s += 't';
-	//cout << s.size() << endl;
-	//cout << s.capacity() << endl;
-	//cout << s;
-
-
 //	MyString str;
 //	MyString str2 = "Writing ";
 //	MyString str3 = "print 10 and then 5 more";
@@ -100,7 +123,7 @@ int main()
 	//MyString s;
 	//MyString base = "The quick brown fox jumps over a lazy dog.";
 
-	//// used in the same order as described above:
+	// used in the same order as described above:
 
 	//str.assign(s);
 	//std::cout << str << '\n';
@@ -117,17 +140,16 @@ int main()
 	//str.assign(0, '*');
 	//std::cout << str << '\n';         // "**********"
 
+	//
+	//MyString s{ "nguyen thanh tung" };
+	//MyString str(s, 0, 100);
+	//cout << str;
+	//cout << str.size() << endl;
+	//cout << str.capacity() << endl;
 
 
-	//std::cout << str2;
 
-	//char q[4];
-	//q[3] = '\0';
-	//MyString str;
-	//MyString s(-5, 'c');
-	//cout << s << endl;
-	//cout << s.size() << endl;
-	//cout << s.capacity() << endl;
+
 	system("pause");
 	return 0;
 }

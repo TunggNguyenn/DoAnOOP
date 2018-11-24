@@ -87,6 +87,15 @@ public:
 	MyString& assign(size_t n, char c);  //fill(5)
 	//template<class InputIterator>
 	//MyString& assign(InputIterator first, InputIterator last);  //range(6)
+	MyString& insert(size_t pos, const MyString& str);  //string (1)	
+	MyString& insert(size_t pos, const MyString& str, size_t subpos, size_t sublen = npos);  //substring(2)
+	MyString& insert(size_t pos, const char* s);  //c-string (3)	
+	MyString& insert(size_t pos, const char* s, size_t n);  //buffer (4)	
+	MyString& insert(size_t pos, size_t n, char c);  //
+	//void insert(iterator p, size_t n, char c);  //fill (5)	
+	//iterator insert(iterator p, char c);  //single character (6)
+	//template <class InputIterator>  //
+	//void insert(iterator p, InputIterator first, InputIterator last);  //range (7)
 
 	friend ostream& operator<<(ostream& os, const MyString& str);
 	friend istream& operator>>(istream& is, MyString& str);
