@@ -1,9 +1,13 @@
 ﻿#ifndef __MYSTRING_H__
 #define __MYSTRING_H__
-#include <iostream>
-using namespace std;
+#include "MyIterator.h"
+
 
 #define DEFAULT_ADD_RESERVER_SIZE 15
+
+
+
+
 
 class MyString
 {
@@ -23,8 +27,8 @@ private:
 	size_t m_size;
 	size_t m_reserved_size;
 
-	static const size_t npos = -1;
 public:
+	static const size_t npos = -1;
 	//constructor
 	MyString();  //default
 	MyString(const MyString& str);  //copy
@@ -44,6 +48,10 @@ public:
 	MyString& operator=(const MyString& str);  //string
 	MyString& operator=(const char* s);  //c-string
 	MyString& operator=(char c);  //character
+
+	//Iterator
+	MyIterator begin() noexcept;
+	const_MyIterator begin() const noexcept;
 
 
 	//Capacity
@@ -96,6 +104,57 @@ public:
 	//iterator insert(iterator p, char c);  //single character (6)
 	//template <class InputIterator>  //
 	//void insert(iterator p, InputIterator first, InputIterator last);  //range (7)
+	MyString& erase(size_t pos = 0, size_t len = npos);  //sequence(1)
+	//iterator erase(const_iterator p);  //character(2)
+	//iterator erase(const_iterator first, const_iterator last);  //range
+	MyString& replace(size_t pos, size_t len, const MyString& str);  //
+	//MyString& replace(const_iterator i1, const_iterator i2, const MyString& str);  //string (1)
+	MyString& replace(size_t pos, size_t len, const MyString& str, size_t subpos, size_t sublen = npos);  //substring (2)
+	MyString& replace(size_t pos, size_t len, const char* s);  //
+	//MyString& replace(const_iterator i1, const_iterator i2, const char* s);  //c-string (3)
+	MyString& replace(size_t pos, size_t len, const char* s, size_t n);  //
+	//MyString& replace(const_iterator i1, const_iterator i2, const char* s, size_t n);  //buffer (4)
+	MyString& replace(size_t pos, size_t len, size_t n, char c);  //
+	//MyString& replace(const_iterator i1, const_iterator i2, size_t n, char c);  //fill (5)	
+	//template <class InputIterator>
+	//MyString& replace(const_iterator i1, const_iterator i2, InputIterator first, InputIterator last);  //range (6)
+	//MyString& replace(const_iterator i1, const_iterator i2, initializer_list<char> il);  //initializer list (7)
+	void swap(MyString& str);
+	void pop_back();
+
+	//String operations
+	const char* c_str() const noexcept;
+	const char* data() const noexcept;
+	//allocator_type get_allocator() const noexcept;
+	size_t copy(char*s, size_t len, size_t pos = 0) const;
+	size_t find(const MyString& str, size_t pos = 0) const noexcept;  //string(1)
+	size_t find(const char* s, size_t pos = 0) const;  //c-string(2)
+	size_t find(const char* s, size_t pos, size_t n) const;  //buffer(3)
+	size_t find(char c, size_t pos = 0) const noexcept;  //character(4)
+	size_t rfind(const MyString& str, size_t pos = npos) const noexcept;  //string (1)
+	size_t rfind(const char* s, size_t pos = npos) const;  //c-string (2)	
+	size_t rfind(const char* s, size_t pos, size_t n) const;  //buffer (3)
+	size_t rfind(char c, size_t pos = npos) const noexcept;  //character (4)
+	size_t find_first_of(const MyString& str, size_t pos = 0) const;  //string (1)	
+	size_t find_first_of(const char* s, size_t pos = 0) const;  //c-string (2)
+	size_t find_first_of(const char* s, size_t pos, size_t n) const;  //buffer (3)
+	size_t find_first_of(char c, size_t pos = 0) const noexcept;  //character (4)
+	size_t find_last_of(const MyString& str, size_t pos = npos) const noexcept;  //string (1)	
+	size_t find_last_of(const char* s, size_t pos = npos) const;  //c-string (2)	
+	size_t find_last_of(const char* s, size_t pos, size_t n) const;  //buffer (3)	
+	size_t find_last_of(char c, size_t pos = npos) const noexcept;  //character (4)	
+	size_t find_first_not_of(const MyString& str, size_t pos = 0) const noexcept;  //string (1)
+	size_t find_first_not_of(const char* s, size_t pos = 0) const;  //c-string (2)	
+	size_t find_first_not_of(const char* s, size_t pos, size_t n) const;  //buffer (3)
+	size_t find_first_not_of(char c, size_t pos = 0) const noexcept;  //character (4)	
+	size_t find_last_not_of(const MyString& str, size_t pos = npos) const noexcept;  //string (1)
+	size_t find_last_not_of(const char* s, size_t pos = npos) const;  //c-string (2)	
+	size_t find_last_not_of(const char* s, size_t pos, size_t n) const;  //buffer (3)	
+	size_t find_last_not_of(char c, size_t pos = npos) const noexcept;  //character (4)	
+	MyString substr(size_t pos = 0, size_t len = npos) const;
+
+
+
 
 	friend ostream& operator<<(ostream& os, const MyString& str);
 	friend istream& operator>>(istream& is, MyString& str);

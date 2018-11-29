@@ -198,6 +198,20 @@ MyString & MyString::operator=(char c)
 	return *this;
 }
 
+
+
+MyIterator MyString::begin() noexcept
+{
+	MyIterator myIterator(this->m_pch);
+	return myIterator;
+}
+
+const_MyIterator MyString::begin() const noexcept
+{
+	const_MyIterator const_myIterator(this->m_pch);
+	return const_myIterator;
+}
+
 /*Capacity*/
 size_t MyString::size() const noexcept
 {
@@ -692,7 +706,7 @@ MyString & MyString::assign(size_t n, char c)
 
 MyString & MyString::insert(size_t pos, const MyString & str)
 {
-	if (pos <= this->m_size)
+	if (pos >= 0 && pos <= this->m_size)
 	{
 		MyString MyString_Insert(*this, pos);
 		this->m_pch[this->m_size] = 0;
@@ -709,7 +723,7 @@ MyString & MyString::insert(size_t pos, const MyString & str)
 
 MyString & MyString::insert(size_t pos, const MyString & str, size_t subpos, size_t sublen)
 {
-	if (pos <= this->m_size)
+	if (pos >= 0 && pos <= this->m_size)
 	{
 		MyString MyString_Insert(*this, pos);
 		this->m_pch[this->m_size] = 0;
@@ -726,7 +740,7 @@ MyString & MyString::insert(size_t pos, const MyString & str, size_t subpos, siz
 
 MyString & MyString::insert(size_t pos, const char * s)
 {
-	if (pos <= this->m_size)
+	if (pos >= 0 && pos <= this->m_size)
 	{
 		MyString MyString_Insert(*this, pos);
 		this->m_pch[this->m_size] = 0;
@@ -743,7 +757,7 @@ MyString & MyString::insert(size_t pos, const char * s)
 
 MyString & MyString::insert(size_t pos, const char * s, size_t n)
 {
-	if (pos <= this->m_size)
+	if (pos >= 0 && pos <= this->m_size)
 	{
 		MyString MyString_Insert(*this, pos);
 		this->m_pch[this->m_size] = 0;
@@ -760,7 +774,7 @@ MyString & MyString::insert(size_t pos, const char * s, size_t n)
 
 MyString & MyString::insert(size_t pos, size_t n, char c)
 {
-	if (pos <= this->m_size)
+	if (pos >= 0 && pos <= this->m_size)
 	{
 		MyString MyString_Insert(*this, pos);
 		this->m_pch[this->m_size] = 0;
@@ -773,6 +787,585 @@ MyString & MyString::insert(size_t pos, size_t n, char c)
 	{
 		throw;
 	}
+}
+
+MyString & MyString::erase(size_t pos, size_t len)
+{
+	if (pos >= 0 && pos <= this->m_size)
+	{
+		if (len == (pow(2, 32) - 1) || len >= (this->m_size - pos))
+		{
+			this->m_pch[this->m_size] = 0;
+			this->m_size = pos;
+			this->m_pch[this->m_size] = '\0';
+		}
+		else
+		{
+			this->m_pch[this->m_size] = 0;
+			for (auto i = 0; i < this->m_size - (len + pos); i++)
+			{
+				this->m_pch[pos + i] = this->m_pch[pos + len + i];
+			}
+			this->m_size = this->m_size - len;
+			this->m_pch[this->m_size] = '\0';
+		}
+		return *this;
+	}
+	else
+	{
+		throw;
+	}
+}
+
+MyString & MyString::replace(size_t pos, size_t len, const MyString & str)
+{
+	this->erase(pos, len);
+	this->insert(pos, str);
+	return *this;
+}
+
+MyString & MyString::replace(size_t pos, size_t len, const MyString & str, size_t subpos, size_t sublen)
+{
+	this->erase(pos, len);
+	this->insert(pos, str, subpos, sublen);
+	return *this;
+}
+
+MyString & MyString::replace(size_t pos, size_t len, const char * s)
+{
+	this->erase(pos, len);
+	this->insert(pos, s);
+	return *this;
+}
+
+MyString & MyString::replace(size_t pos, size_t len, const char * s, size_t n)
+{
+	this->erase(pos, len);
+	this->insert(pos, s, n);
+	return *this;
+}
+
+MyString & MyString::replace(size_t pos, size_t len, size_t n, char c)
+{
+	this->erase(pos, len);
+	this->insert(pos, n, c);
+	return *this;
+}
+
+void MyString::swap(MyString & str)
+{
+	char *m_pch_temp = this->m_pch;
+	size_t m_size_temp = this->m_size;
+	size_t m_reserved_size_temp = this->m_reserved_size;
+
+	this->m_pch = str.m_pch;
+	this->m_size = str.m_size;
+	this->m_reserved_size = str.m_reserved_size;
+
+	str.m_pch = m_pch_temp;
+	str.m_size = m_size_temp;
+	str.m_reserved_size = m_reserved_size_temp;
+}
+
+void MyString::pop_back()
+{
+	if(!this->empty())
+	{
+		this->m_pch[this->m_size] = 0;
+		this->m_size--;
+		this->m_pch[this->m_size] = '\0';
+	}
+	else
+	{
+		throw;
+	}
+}
+
+const char * MyString::c_str() const noexcept
+{
+	return this->m_pch;
+}
+
+const char * MyString::data() const noexcept
+{
+	return this->m_pch;
+}
+
+size_t MyString::copy(char * s, size_t len, size_t pos) const
+{
+	if (pos <= this->m_size)
+	{
+		int length;
+		if (pos + len >= this->m_size)
+		{
+			length = this->m_size - pos;
+		}
+		else
+		{
+			length = len;
+		}
+
+		for (auto i = 0; i < length; i++)
+		{
+			s[i] = this->m_pch[pos + i];
+		}
+		return length;
+	}
+	else
+	{
+		throw;
+	}
+}
+
+size_t MyString::find(const MyString & str, size_t pos) const noexcept
+{
+	if (pos >= 0 && (pos <= this->size() - str.size()))
+	{
+		int count = 0;
+		for (auto i = 0; i <= this->size() - str.size() - pos; i++)
+		{
+			if (str[count] == this->m_pch[pos + i])
+			{
+				count++;
+				for (auto j = i + 1; j < this->size() - pos; j++)
+				{
+					if (str[count] == this->m_pch[pos + j])
+					{
+						count++;
+					}
+					else
+					{
+						break;
+					}
+				}
+				if (count == str.m_size)
+				{
+					return pos + i;
+				}
+				else
+				{
+					count = 0;
+				}
+			}
+		}
+		return npos;
+	}
+	else
+	{
+		return npos;
+	}
+}
+
+size_t MyString::find(const char * s, size_t pos) const
+{
+	MyString MyString_find(s);
+	return this->find(MyString_find, pos);
+}
+
+size_t MyString::find(const char * s, size_t pos, size_t n) const
+{
+	if (lengthString(s) >= n)
+	{
+		MyString MyString_find(s, n);
+		return this->find(MyString_find, pos);
+	}
+	else
+	{
+		return npos;
+	}
+}
+
+size_t MyString::find(char c, size_t pos) const noexcept
+{
+	if (pos >= 0 && pos < this->size())
+	{
+		for (auto i = pos; i < this->size(); i++)
+		{
+			if (this->m_pch[i] == c)
+			{
+				return i;
+			}
+		}
+		return npos;
+	}
+	else
+	{
+		return npos;
+	}
+}
+
+size_t MyString::rfind(const MyString & str, size_t pos) const noexcept
+{
+	if (pos >= this->size())
+	{
+		pos = this->size() - 1;
+	}
+	int count = 0;
+	int tempt = -1;
+	for (int i = 0; i <= pos; i++)
+	{
+		if (str[count] == this->m_pch[i])
+		{
+			count++;
+			for (int j = i + 1; j <= pos; j++)
+			{
+				if (str[count] == this->m_pch[j])
+				{
+					count++;
+				}
+				else
+				{
+					break;
+				}
+			}
+			if (count == str.size())
+			{
+				tempt = i;
+			}
+			count = 0;
+
+		}
+	}
+	if (tempt != -1)
+	{
+		return tempt;
+	}
+	else
+	{
+		return npos;
+	}
+}
+
+size_t MyString::rfind(const char * s, size_t pos) const
+{
+	MyString MyString_rfind(s);
+	return this->rfind(MyString_rfind, pos);
+}
+
+size_t MyString::rfind(const char * s, size_t pos, size_t n) const
+{
+	if (lengthString(s) >= n)
+	{
+		MyString MyString_rfind(s, n);
+		return this->rfind(MyString_rfind, pos);
+	}
+	else
+	{
+		return npos;
+	}
+}
+
+size_t MyString::rfind(char c, size_t pos) const noexcept
+{
+	if (pos >= this->size())
+	{
+		pos = this->size() - 1;
+	}
+	int tempt = -1;
+	for (auto i = 0; i <= pos; i++)
+	{
+		if (this->m_pch[i] == c)
+		{
+			tempt = i;
+		}
+	}
+	if (tempt != -1)
+	{
+		return tempt;
+	}
+	else
+	{
+		return npos;
+	}
+}
+
+size_t MyString::find_first_of(const MyString & str, size_t pos) const
+{
+	if (pos < this->size())
+	{
+		for (int i = pos; i < this->size(); i++)
+		{
+			for (int j = 0; j < str.size(); j++)
+			{
+				if (this->m_pch[i] == str[j])
+				{
+					return i; break;
+				}
+			}
+		}
+		return npos;
+	}
+	else
+	{
+		return npos;
+	}
+}
+
+size_t MyString::find_first_of(const char * s, size_t pos) const
+{
+	MyString MyString_find_first_of(s);
+	return this->find_first_of(MyString_find_first_of, pos);
+}
+
+size_t MyString::find_first_of(const char * s, size_t pos, size_t n) const
+{
+	if (lengthString(s) >= n)
+	{
+		MyString MyString_find_first_of(s, n);
+		return this->find_first_of(MyString_find_first_of, pos);
+	}
+	else
+	{
+		return npos;
+	}
+}
+
+size_t MyString::find_first_of(char c, size_t pos) const noexcept
+{
+	if (pos >= 0 && pos < this->size())
+	{
+		for (auto i = pos; i < this->size(); i++)
+		{
+			if (this->m_pch[i] == c)
+			{
+				return i;
+			}
+		}
+		return npos;
+	}
+	else
+	{
+		return npos;
+	}
+}
+
+size_t MyString::find_last_of(const MyString & str, size_t pos) const noexcept
+{
+	if (pos >= this->size())
+	{
+		pos = this->size() - 1;
+	}
+	int tempt = -1;
+	for (int i = 0; i <= pos; i++)
+	{
+		for (int j = 0; j < str.size(); j++)
+		{
+			if (this->m_pch[i] == str[j])
+			{
+				tempt = i; break;
+			}
+		}
+	}
+	if (tempt != -1)
+	{
+		return tempt;
+	}
+	else
+	{
+		return npos;
+	}
+}
+
+size_t MyString::find_last_of(const char * s, size_t pos) const
+{
+	MyString MyString_find_last_of(s);
+	return this->find_last_of(MyString_find_last_of, pos);
+}
+
+size_t MyString::find_last_of(const char * s, size_t pos, size_t n) const
+{
+	if (lengthString(s) >= n)
+	{
+		MyString MyString_find_last_of(s, n);
+		return this->find_last_of(MyString_find_last_of, pos);
+	}
+	else
+	{
+		return npos;
+	}
+}
+
+size_t MyString::find_last_of(char c, size_t pos) const noexcept
+{
+	if (pos >= this->size())
+	{
+		pos = this->size() - 1;
+	}
+	int tempt = -1;
+	for (auto i = 0; i <= pos; i++)
+	{
+		if (this->m_pch[i] == c)
+		{
+			tempt = i;
+		}
+	}
+	if (tempt != -1)
+	{
+		return tempt;
+	}
+	else
+	{
+		return npos;
+	}
+}
+
+size_t MyString::find_first_not_of(const MyString & str, size_t pos) const noexcept
+{
+	if (pos < this->size())
+	{
+		int count = 0;
+		for (int i = pos; i < this->size(); i++)
+		{
+			for (int j = 0; j < str.size(); j++)
+			{
+				if (this->m_pch[i] != str[j])
+				{
+					count++;
+				}
+				else
+				{
+					break;
+				}
+			}
+
+			if (count == str.size())
+			{
+				return i;
+			}
+			else
+			{
+				count = 0;
+			}
+		}
+		return npos;
+	}
+	else
+	{
+		return npos;
+	}
+}
+
+size_t MyString::find_first_not_of(const char * s, size_t pos) const
+{
+	MyString MyString_find_first_not_of(s);
+	return this->find_first_not_of(MyString_find_first_not_of, pos);
+}
+
+size_t MyString::find_first_not_of(const char * s, size_t pos, size_t n) const
+{
+	if (lengthString(s) >= n)
+	{
+		MyString MyString_find_first_not_of(s, n);
+		return this->find_first_not_of(MyString_find_first_not_of, pos);
+	}
+	else
+	{
+		return npos;
+	}
+}
+
+size_t MyString::find_first_not_of(char c, size_t pos) const noexcept
+{
+	if (pos >= 0 && pos < this->size())
+	{
+		for (auto i = pos; i < this->size(); i++)
+		{
+			if (this->m_pch[i] != c)
+			{
+				return i;
+			}
+		}
+		return npos;
+	}
+	else
+	{
+		return npos;
+	}
+}
+
+size_t MyString::find_last_not_of(const MyString & str, size_t pos) const noexcept
+{
+	if (pos >= this->size())
+	{
+		pos = this->size() - 1;
+	}
+	int tempt = -1;
+	int count = 0;
+	for (int i = 0; i <= pos; i++)
+	{
+		for (int j = 0; j < str.size(); j++)
+		{
+			if (this->m_pch[i] != str[j])
+			{
+				count++;
+			}
+			else
+			{
+				break;
+			}
+		}
+		if (count == str.size())
+		{
+			tempt = i;
+		}
+		count = 0;
+	}
+	if (tempt != -1)
+	{
+		return tempt;
+	}
+	else
+	{
+		return npos;
+	}
+}
+
+size_t MyString::find_last_not_of(const char * s, size_t pos) const
+{
+	MyString MyString_find_last_not_of(s);
+	return this->find_last_not_of(MyString_find_last_not_of, pos);
+}
+
+size_t MyString::find_last_not_of(const char * s, size_t pos, size_t n) const
+{
+	if (lengthString(s) >= n)
+	{
+		MyString MyString_find_last_not_of(s, n);
+		return this->find_last_not_of(MyString_find_last_not_of, pos);
+	}
+	else
+	{
+		return npos;
+	}
+}
+
+size_t MyString::find_last_not_of(char c, size_t pos) const noexcept
+{
+	if (pos >= this->size())
+	{
+		pos = this->size() - 1;
+	}
+	int tempt = -1;
+	for (auto i = 0; i <= pos; i++)
+	{
+		if (this->m_pch[i] != c)
+		{
+			tempt = i;
+		}
+	}
+	if (tempt != -1)
+	{
+		return tempt;
+	}
+	else
+	{
+		return npos;
+	}
+}
+
+MyString MyString::substr(size_t pos, size_t len) const
+{
+	return MyString(*this, pos, len);
 }
 
 
