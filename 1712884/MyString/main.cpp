@@ -4,13 +4,107 @@
 
 int main()
 {
-	MyString str = "We think in generalities, but we live in details.";
-	// (quoting Alfred N. Whitehead)
+	MyString name;
 
-	MyString str2 = str.substr(48, 1000);     // "think"
-	cout << str2;
-	cout << str2.size() << endl;
-	cout << str2.capacity();
+	std::cout << "Please, enter your name: ";
+	std::cin >> name;
+	std::cout << "Hello, " << name << "!\n";
+	cin >> name;
+	cout << name << endl;
+	cin >> name;
+	cout << name << endl;
+
+
+
+
+	//MyString foo = "alpha";
+	//MyString bar = "beta";
+
+
+
+	//if (foo == bar) std::cout << "foo and bar are equal\n";
+	//if (foo != bar) std::cout << "foo and bar are not equal\n";
+	//if (foo < bar) std::cout << "foo is less than bar\n";
+	//if (foo > bar) std::cout << "foo is greater than bar\n";
+	//if (foo <= bar) std::cout << "foo is less than or equal to bar\n";
+	//if (foo >= bar) std::cout << "foo is greater than or equal to bar\n";
+
+
+	//const MyString& str0("nguyen");
+	//MyString&& str1("thanh");
+	//
+
+	//MyString str3("hihi");
+	//char c = 'c';
+
+
+	//str3 = c + str1;
+	//cout << str3 << endl;
+	//cout << str0 << endl;
+	//cout << str1 << endl;
+
+
+
+
+
+
+
+
+	//MyString str = "Hello world!";
+	//std::cout << str << '\n';
+
+
+
+
+	//MyString buyer("moneyaaaaaaaaaaaaaa");
+	//cout << buyer.size() << endl;
+	//cout << buyer.capacity() << endl;
+	//MyString seller("goods");
+	//cout << seller.size() << endl;
+	//cout << seller.capacity() << endl;
+
+	//std::cout << "Before the swap, buyer has " << buyer;
+	//std::cout << " and seller has " << seller << '\n';
+
+	//swap(buyer, seller);
+
+	//std::cout << " After the swap, buyer has " << buyer;
+	//std::cout << " and seller has " << seller << '\n';
+	//cout << buyer.size() << endl;
+	//cout << buyer.capacity() << endl;
+
+	//cout << seller.size() << endl;
+	//cout << seller.capacity() << endl;
+
+
+
+	//MyString str1("green apple");
+	//MyString str2("red apple");
+
+	//cout << str1.compare(str2) << endl;
+
+	//if (str1.compare(str2) != 0)
+	//	std::cout << str1 << " is not " << str2 << '\n';
+
+	//if (str1.compare(6, 5, "apple") == 0)
+	//	std::cout << "still, " << str1 << " is an apple\n";
+
+	//if (str2.compare(str2.size() - 5, 5, "apple") == 0)
+	//	std::cout << "and " << str2 << " is also an apple\n";
+
+	//if (str1.compare(6, 5, str2, 4, 5) == 0)
+	//	std::cout << "therefore, both are apples\n";
+
+
+
+
+	//MyString str = "We think in generalities, but we live in details.";
+	//// (quoting Alfred N. Whitehead)
+
+	//MyString str2 = str.substr(48, 1000);     // "think"
+	//cout << str2;
+	//cout << str2.size() << endl;
+	//cout << str2.capacity();
 
 	//std::size_t pos = str.find("live");      // position of "live" in str
 

@@ -154,6 +154,26 @@ MyString::MyString(size_t n, char c)
 	this->m_pch[this->m_size] = '\0';
 }
 
+MyString::MyString(MyString && str) noexcept
+{
+	if (str.m_size <= DEFAULT_ADD_RESERVER_SIZE)
+	{
+		this->m_size = str.m_size;
+		this->m_reserved_size = DEFAULT_ADD_RESERVER_SIZE + 1;
+	}
+	else
+	{
+		this->m_size = str.m_size;
+		this->m_reserved_size = ((int)(this->m_size / (DEFAULT_ADD_RESERVER_SIZE + 1)))*(DEFAULT_ADD_RESERVER_SIZE + 1) + DEFAULT_ADD_RESERVER_SIZE + 1;
+	}
+	m_pch = new char[this->m_reserved_size];
+	for (int i = 0; i < this->m_size; i++)
+	{
+		this->m_pch[i] = str.m_pch[i];
+	}
+	this->m_pch[this->m_size] = '\0';
+}
+
 /*Destructor*/
 MyString::~MyString()
 {
@@ -1368,6 +1388,91 @@ MyString MyString::substr(size_t pos, size_t len) const
 	return MyString(*this, pos, len);
 }
 
+int MyString::compare(const MyString & str) const noexcept
+{
+	int temp_length = this->size() < str.size() ? this->size() : str.size();
+	for (int i = 0; i < temp_length; i++)
+	{
+		if (this->m_pch[i] < str[i])
+		{
+			return -1;
+		}
+		else if (this->m_pch[i] > str[i])
+		{
+			return 1;
+		}
+	}
+
+	if (this->size() < str.size())
+	{
+		return -1;
+	}
+	else if (this->size() > str.size())
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+int MyString::compare(size_t pos, size_t len, const MyString & str) const
+{
+	MyString MyString_compare(*this, pos, len);
+	return MyString_compare.compare(str);
+}
+
+int MyString::compare(size_t pos, size_t len, const MyString & str, size_t subpos, size_t sublen) const
+{
+	MyString MyString_compare(*this, pos, len);
+	MyString subMyString_compare(str, subpos, sublen);
+	
+	return MyString_compare.compare(subMyString_compare);
+}
+
+int MyString::compare(const char * s) const
+{
+	int temp_length = this->size() < lengthString(s) ? this->size() : lengthString(s);
+	for (int i = 0; i < temp_length; i++)
+	{
+		if (this->m_pch[i] < s[i])
+		{
+			return -1;
+		}
+		else if (this->m_pch[i] > s[i])
+		{
+			return 1;
+		}
+	}
+
+	if (this->size() < lengthString(s))
+	{
+		return -1;
+	}
+	else if (this->size() > lengthString(s))
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+int MyString::compare(size_t pos, size_t len, const char * s) const
+{
+	MyString MyString_compare(s);
+
+	return this->compare(pos, len, MyString_compare);
+}
+
+int MyString::compare(size_t pos, size_t len, const char * s, size_t n) const
+{
+	MyString MyString_compare(s, n);
+
+	return this->compare(pos, len, MyString_compare);
+}
 
 
 
@@ -1375,27 +1480,303 @@ MyString MyString::substr(size_t pos, size_t len) const
 
 
 
-/////////////////////////Hàm
+
+//----------------------------------------------------------Hàm----------------------------------------
 MyString operator+(const MyString& lhs, const MyString& rhs)
 {
-	MyString temp;
+	MyString MyString_temp(lhs);
+	MyString_temp.append(rhs);
 
-	return temp;
+	return MyString_temp;
+}
+
+MyString operator+(MyString && lhs, MyString && rhs)
+{
+	MyString MyString_temp(lhs);
+	MyString_temp.append(MyString(rhs));
+
+	return MyString_temp;
+}
+
+MyString operator+(MyString && lhs, const MyString & rhs)
+{
+	MyString MyString_temp(lhs);
+	MyString_temp.append(rhs);
+
+	return MyString_temp;
+}
+
+MyString operator+(const MyString & lhs, MyString && rhs)
+{
+	MyString MyString_temp(lhs);
+	MyString_temp.append(MyString(rhs));
+
+	return MyString_temp;
+}
+
+MyString operator+(const MyString & lhs, const char * rhs)
+{
+	MyString MyString_temp(lhs);
+	MyString_temp.append(rhs);
+
+	return MyString_temp;
+}
+
+MyString operator+(MyString && lhs, const char * rhs)
+{
+	MyString MyString_temp(lhs);
+	MyString_temp.append(rhs);
+
+	return MyString_temp;
+}
+
+MyString operator+(const char * lhs, const MyString & rhs)
+{
+	MyString MyString_temp(lhs);
+	MyString_temp.append(rhs);
+
+	return MyString_temp;
+}
+
+MyString operator+(const char * lhs, MyString && rhs)
+{
+	MyString MyString_temp(lhs);
+	MyString_temp.append(MyString(rhs));
+
+	return MyString_temp;
+}
+
+MyString operator+(const MyString & lhs, char rhs)
+{
+	MyString MyString_temp(lhs);
+	MyString_temp.append(1, rhs);
+
+	return MyString_temp;
+}
+
+MyString operator+(MyString && lhs, char rhs)
+{
+	MyString MyString_temp(lhs);
+	MyString_temp.append(1, rhs);
+
+	return MyString_temp;
+}
+
+MyString operator+(char lhs, const MyString & rhs)
+{
+	MyString MyString_temp(1, lhs);
+	MyString_temp.append(rhs);
+
+	return MyString_temp;
+}
+
+MyString operator+(char lhs, MyString && rhs)
+{
+	MyString MyString_temp(1, lhs);
+	MyString_temp.append(MyString(rhs));
+
+	return MyString_temp;
+}
+
+bool operator==(const MyString & lhs, const MyString & rhs) noexcept
+{
+	if (lhs.compare(rhs) == 0)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool operator==(const char * lhs, const MyString & rhs)
+{
+	if (rhs.compare(lhs) == 0)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool operator==(const MyString & lhs, const char * rhs)
+{
+	if (lhs.compare(rhs) == 0)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool operator!=(const MyString & lhs, const MyString & rhs) noexcept
+{
+	if (lhs.compare(rhs) != 0)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool operator!=(const char * lhs, const string & rhs)
+{
+	if (rhs.compare(lhs) != 0)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool operator!=(const MyString & lhs, const char * rhs)
+{
+	if (lhs.compare(rhs) != 0)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool operator<(const MyString & lhs, const MyString & rhs) noexcept
+{
+	if (lhs.compare(rhs) < 0)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool operator<(const char * lhs, const MyString & rhs)
+{
+	if (rhs.compare(lhs) > 0)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool operator<(const MyString & lhs, const char * rhs)
+{
+	if (lhs.compare(rhs) < 0)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool operator<=(const MyString & lhs, const MyString & rhs) noexcept
+{
+	if (lhs.compare(rhs) <= 0)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool operator<=(const char * lhs, const MyString & rhs)
+{
+	if (rhs.compare(lhs) >= 0)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool operator<=(const MyString & lhs, const char * rhs)
+{
+	if (lhs.compare(rhs) <= 0)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool operator>(const MyString & lhs, const MyString & rhs) noexcept
+{
+	if (lhs.compare(rhs) > 0)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool operator>(const char * lhs, const string & rhs)
+{
+	if (rhs.compare(lhs) < 0)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool operator>(const MyString & lhs, const char * rhs)
+{
+	if (lhs.compare(rhs) > 0)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool operator>=(const MyString & lhs, const MyString & rhs) noexcept
+{
+	if (lhs.compare(rhs) >= 0)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool operator>=(const char * lhs, const MyString & rhs)
+{
+	if (rhs.compare(lhs) <= 0)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool operator>=(const MyString & lhs, const char * rhs)
+{
+	if (lhs.compare(rhs) >= 0)
+	{
+		return true;
+	}
+	return false;
 }
 
 
 
-ostream& operator<<(ostream& os, const MyString& str)
+//ostream& operator<<(ostream& os, const MyString& str)
+//{
+//	for (int i = 0; i < str.m_size; i++)
+//	{
+//		os << str.m_pch[i];
+//	}
+//	return os;
+//}
+
+//istream& operator>>(istream& is, MyString& str)
+//{
+//	is >> str;
+//	return is;
+//}
+
+void swap(MyString & x, MyString & y)
 {
-	for (int i = 0; i < str.m_size; i++)
+	x.swap(y);
+}
+
+istream & operator>>(istream & is, MyString & str)
+{
+	char* flag = new char[1000];
+	is >> flag;
+
+	str.assign(flag);
+
+	return is;
+}
+
+ostream & operator<<(ostream & os, const MyString & str)
+{
+	for (int i = 0; i < str.size(); i++)
 	{
-		os << str.m_pch[i];
+		os << str[i];
 	}
 	return os;
-}
-
-istream& operator>>(istream& is, MyString& str)
-{
-	is >> str;
-	return is;
 }

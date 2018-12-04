@@ -39,7 +39,7 @@ public:
 //	template<class InputIterator>
 //	MyString(InputIterator first, InputIterator last);
 	//MyString(initializer_list<char> il);  //initializer list             Chưa làm
-	//MyString(MyString&& str) noexcept;  //move
+	MyString(MyString&& str) noexcept;  //move
 
 	//destructor
 	~MyString(); 
@@ -152,28 +152,68 @@ public:
 	size_t find_last_not_of(const char* s, size_t pos, size_t n) const;  //buffer (3)	
 	size_t find_last_not_of(char c, size_t pos = npos) const noexcept;  //character (4)	
 	MyString substr(size_t pos = 0, size_t len = npos) const;
+	int compare(const MyString& str) const noexcept;  //string (1)	
+	int compare(size_t pos, size_t len, const MyString& str) const;  //
+	int compare(size_t pos, size_t len, const MyString& str, size_t subpos, size_t sublen = npos) const;  //substrings (2)
+	int compare(const char* s) const;  //
+	int compare(size_t pos, size_t len, const char* s) const;  //c-string (3)
+	int compare(size_t pos, size_t len, const char* s, size_t n) const;  //buffer (4)	
 
-
-
-
-	friend ostream& operator<<(ostream& os, const MyString& str);
-	friend istream& operator>>(istream& is, MyString& str);
 };
 
-
+/*Non-member function overloads*/
 //operator+
-MyString operator+(const MyString& lhs, const MyString& rhs);  //
-MyString operator+(MyString&& lhs, MyString&& rhs);  //
-MyString operator+(MyString&& lhs, const MyString& rhs);  //          string
-MyString operator+(const MyString& lhs, MyString&& rhs);  //
+MyString operator+ (const MyString& lhs, const MyString& rhs);  //
+MyString operator+ (MyString&&      lhs, MyString&&      rhs);  //
+MyString operator+ (MyString&&      lhs, const MyString& rhs);  //
+MyString operator+ (const MyString& lhs, MyString&&      rhs);  //string (1)
 
-MyString operator+(const MyString& lhs, const char* rhs);  //
-MyString operator+(MyString&& lhs, const char* rhs);  //
-MyString operator+(const char* lhs, const MyString& rhs);  //           c-string
-MyString operator+(const char* lhs, MyString&& rhs);  //
+MyString operator+ (const MyString& lhs, const char*   rhs);  //
+MyString operator+ (MyString&&      lhs, const char*   rhs);  //
+MyString operator+ (const char*   lhs, const MyString& rhs);  //
+MyString operator+ (const char*   lhs, MyString&&      rhs);  //c-string (2)
 
-MyString operator+(const MyString& lhs, char rhs);  //
-MyString operator+(MyString&& lhs, char rhs);  //
-MyString operator+(char lhs, const MyString& rhs);  //            character
-MyString operator+(char lhs, MyString&& rhs);  //
+
+MyString operator+ (const MyString& lhs, char          rhs);  //
+MyString operator+ (MyString&&      lhs, char          rhs);  //
+MyString operator+ (char          lhs, const MyString& rhs);  //
+MyString operator+ (char          lhs, MyString&&      rhs);  //character (3)
+
+//relational operators
+bool operator== (const MyString& lhs, const MyString& rhs) noexcept;  //
+bool operator== (const char*   lhs, const MyString& rhs);  //
+bool operator== (const MyString& lhs, const char*   rhs);  //(1)
+
+bool operator!= (const MyString& lhs, const MyString& rhs) noexcept;  //
+bool operator!= (const char*   lhs, const string& rhs);  //
+bool operator!= (const MyString& lhs, const char*   rhs);  //(2)
+
+bool operator<  (const MyString& lhs, const MyString& rhs) noexcept;  //
+bool operator<  (const char*   lhs, const MyString& rhs);  //
+bool operator<  (const MyString& lhs, const char*   rhs);  //(3)
+
+bool operator<= (const MyString& lhs, const MyString& rhs) noexcept;  //
+bool operator<= (const char*   lhs, const MyString& rhs);  //
+bool operator<= (const MyString& lhs, const char*   rhs);  //(4)
+
+bool operator>  (const MyString& lhs, const MyString& rhs) noexcept;  //
+bool operator>  (const char*   lhs, const string& rhs);  //
+bool operator>  (const MyString& lhs, const char*   rhs);  //((5)
+
+bool operator>= (const MyString& lhs, const MyString& rhs) noexcept;  //
+bool operator>= (const char*   lhs, const MyString& rhs);  //
+bool operator>= (const MyString& lhs, const char*   rhs);  //(6)
+
+
+//swap
+void swap(MyString& x, MyString& y);
+
+
+//operator>>
+istream& operator>>(istream& is, MyString& str);  //
+
+//operator<<
+ostream& operator<< (ostream& os, const MyString& str);
+
+
 #endif // !__MYSTRING_H__
