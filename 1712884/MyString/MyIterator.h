@@ -57,7 +57,9 @@ public:
 	virtual void First();
 	virtual void Last();
 	virtual void Next();
+	virtual void nNext(size_t n);
 	virtual void Previous();
+	virtual void nPrevious(size_t n);
 	virtual bool IsDone();
 	virtual char& CurrentItem();
 	virtual size_t get_Current();
@@ -102,7 +104,15 @@ public:
 		return tmp;
 	}
 
+	//
+	MyStringIterator operator+(size_t n)
+	{
+		MyStringIterator tmp(*this);
 
+		tmp.nNext(n);
+
+		return tmp;
+	}
 
 	bool operator==(MyStringIterator rhs)
 	{
@@ -122,6 +132,9 @@ public:
 		}
 		return CurrentItem();
 	}
+
+
+
 	MyStringIterator& operator=(MyStringIterator& Item)
 	{
 		StringIterator::StringIterator(Item);
@@ -166,6 +179,15 @@ public:
 	{
 		const_MyStringIterator tmp(*this);
 		operator--();
+		return tmp;
+	}
+
+	const_MyStringIterator operator+(size_t n)
+	{
+		const_MyStringIterator tmp(*this);
+
+		tmp.nNext(n);
+
 		return tmp;
 	}
 
@@ -221,7 +243,7 @@ public:
 
 	Reverse_MyStringIterator& operator--()
 	{
-		Reverse_MyStringIterator::Previous();
+		Reverse_MyStringIterator::Next();
 		return *this;
 	}
 
@@ -230,6 +252,15 @@ public:
 	{
 		Reverse_MyStringIterator tmp(*this);
 		operator--();
+		return tmp;
+	}
+
+	Reverse_MyStringIterator operator+(size_t n)
+	{
+		Reverse_MyStringIterator tmp(*this);
+
+		tmp.nPrevious(n);
+
 		return tmp;
 	}
 
@@ -284,7 +315,7 @@ public:
 
 	const_Reverse_MyStringIterator& operator--()
 	{
-		const_Reverse_MyStringIterator::Previous();
+		const_Reverse_MyStringIterator::Next();
 		return *this;
 	}
 
@@ -293,6 +324,16 @@ public:
 	{
 		const_Reverse_MyStringIterator tmp(*this);
 		operator--();
+		return tmp;
+	}
+
+
+	const_Reverse_MyStringIterator operator+(size_t n)
+	{
+		const_Reverse_MyStringIterator tmp(*this);
+
+		tmp.nPrevious(n);
+
 		return tmp;
 	}
 
@@ -322,9 +363,6 @@ public:
 		return *this;
 	}
 };
-
-
-
 
 
 #endif // !__MYITERATOR_H__

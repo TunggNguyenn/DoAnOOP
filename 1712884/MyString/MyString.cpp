@@ -229,9 +229,19 @@ MyStringIterator MyString::begin() noexcept
 	return MyStringIterator(this->m_pch);
 }
 
+const_MyStringIterator MyString::begin() const noexcept
+{
+	return const_MyStringIterator(this->m_pch);
+}
+
 MyStringIterator MyString::end() noexcept
 {
 	return MyStringIterator(this->m_pch, this->size());
+}
+
+const_MyStringIterator MyString::end() const noexcept
+{
+	return const_MyStringIterator(this->m_pch, this->size());
 }
 
 Reverse_MyStringIterator MyString::rbegin() noexcept
@@ -239,9 +249,19 @@ Reverse_MyStringIterator MyString::rbegin() noexcept
 	return Reverse_MyStringIterator(this->m_pch, this->size() - 1);
 }
 
+const_Reverse_MyStringIterator MyString::rbegin() const noexcept
+{
+	return const_Reverse_MyStringIterator(this->m_pch, this->size() - 1);
+}
+
 Reverse_MyStringIterator MyString::rend() noexcept
 {
 	return Reverse_MyStringIterator(this->m_pch, -1);
+}
+
+const_Reverse_MyStringIterator MyString::rend() const noexcept
+{
+	return const_Reverse_MyStringIterator(this->m_pch, -1);
 }
 
 const_MyStringIterator MyString::cbegin() const noexcept
@@ -912,6 +932,13 @@ MyString & MyString::replace(size_t pos, size_t len, const MyString & str)
 	return *this;
 }
 
+MyString & MyString::replace(const_MyStringIterator i1, const_MyStringIterator i2, const MyString & str)
+{
+	this->replace(i1.get_Current(), i2.get_Current() - i1.get_Current(), str);
+
+	return *this;
+}
+
 MyString & MyString::replace(size_t pos, size_t len, const MyString & str, size_t subpos, size_t sublen)
 {
 	this->erase(pos, len);
@@ -926,6 +953,13 @@ MyString & MyString::replace(size_t pos, size_t len, const char * s)
 	return *this;
 }
 
+MyString & MyString::replace(const_MyStringIterator i1, const_MyStringIterator i2, const char * s)
+{
+	this->replace(i1.get_Current(), i2.get_Current() - i1.get_Current(), s);
+
+	return *this;
+}
+
 MyString & MyString::replace(size_t pos, size_t len, const char * s, size_t n)
 {
 	this->erase(pos, len);
@@ -933,10 +967,25 @@ MyString & MyString::replace(size_t pos, size_t len, const char * s, size_t n)
 	return *this;
 }
 
+MyString & MyString::replace(const_MyStringIterator i1, const_MyStringIterator i2, const char * s, size_t n)
+{
+	MyString myString_temp(s, n);
+	this->replace(i1.get_Current(), i2.get_Current() - i1.get_Current(), myString_temp);
+
+	return *this;
+}
+
 MyString & MyString::replace(size_t pos, size_t len, size_t n, char c)
 {
 	this->erase(pos, len);
 	this->insert(pos, n, c);
+	return *this;
+}
+
+MyString & MyString::replace(const_MyStringIterator i1, const_MyStringIterator i2, size_t n, char c)
+{
+	this->replace(i1.get_Current(), i2.get_Current() - i1.get_Current(), n, c);
+
 	return *this;
 }
 
@@ -1859,6 +1908,16 @@ istream & getline(istream & is, MyString & str, char delim)
 	return is;
 }
 
+istream & getline(istream && is, MyString & str, char delim)
+{
+	char* c_str = new char[256];
+	is.get(c_str, 256, delim);
+
+	str.append(c_str);
+
+	return is;
+}
+
 istream & getline(istream & is, MyString & str)
 {
 	char* c_str = new char[256];
@@ -1869,4 +1928,12 @@ istream & getline(istream & is, MyString & str)
 	return is;
 }
 
+istream & getline(istream && is, MyString & str)
+{
+	char* c_str = new char[256];
+	is.get(c_str, 256);
+	
+	str.append(c_str);
 
+	return is;
+}

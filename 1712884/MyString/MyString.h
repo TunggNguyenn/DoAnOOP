@@ -5,8 +5,6 @@
 #define DEFAULT_ADD_RESERVER_SIZE 15
 
 
-
-
 class MyString
 {
 private:
@@ -44,9 +42,13 @@ public:
 
 	//Iterator
 	MyStringIterator begin() noexcept;  //
+	const_MyStringIterator begin() const noexcept;  //
 	MyStringIterator end() noexcept;  //
+	const_MyStringIterator end() const noexcept;  //
 	Reverse_MyStringIterator rbegin() noexcept;
+	const_Reverse_MyStringIterator rbegin() const noexcept;  //
 	Reverse_MyStringIterator rend() noexcept;
+	const_Reverse_MyStringIterator rend() const noexcept;
 	const_MyStringIterator cbegin() const noexcept;  //
 	const_MyStringIterator cend() const noexcept;  //
 	const_Reverse_MyStringIterator crbegin() const noexcept;  //
@@ -113,14 +115,14 @@ public:
 	MyStringIterator erase(const_MyStringIterator p);  //character(2)
 	MyStringIterator erase(const_MyStringIterator first, const_MyStringIterator last);  //range
 	MyString& replace(size_t pos, size_t len, const MyString& str);  //
-	//MyString& replace(const_iterator i1, const_iterator i2, const MyString& str);  //string (1)
+	MyString& replace(const_MyStringIterator i1, const_MyStringIterator i2, const MyString& str);  //string (1)
 	MyString& replace(size_t pos, size_t len, const MyString& str, size_t subpos, size_t sublen = npos);  //substring (2)
 	MyString& replace(size_t pos, size_t len, const char* s);  //
-	//MyString& replace(const_iterator i1, const_iterator i2, const char* s);  //c-string (3)
+	MyString& replace(const_MyStringIterator i1, const_MyStringIterator i2, const char* s);  //c-string (3)
 	MyString& replace(size_t pos, size_t len, const char* s, size_t n);  //
-	//MyString& replace(const_iterator i1, const_iterator i2, const char* s, size_t n);  //buffer (4)
+	MyString& replace(const_MyStringIterator i1, const_MyStringIterator i2, const char* s, size_t n);  //buffer (4)
 	MyString& replace(size_t pos, size_t len, size_t n, char c);  //
-	//MyString& replace(const_iterator i1, const_iterator i2, size_t n, char c);  //fill (5)	
+	MyString& replace(const_MyStringIterator i1, const_MyStringIterator i2, size_t n, char c);  //fill (5)	
 	//template <class InputIterator>
 	//MyString& replace(const_iterator i1, const_iterator i2, InputIterator first, InputIterator last);  //range (6)
 	//MyString& replace(const_iterator i1, const_iterator i2, initializer_list<char> il);  //initializer list (7)
@@ -221,8 +223,10 @@ istream& operator>>(istream& is, MyString& str);  //
 ostream& operator<< (ostream& os, const MyString& str);
 
 //getline
-istream& getline(istream& is, MyString& str, char delim);  //(1)
-istream& getline(istream& is, MyString& str);  //(2)
+istream& getline(istream& is, MyString& str, char delim);  //
+istream& getline(istream&& is, MyString& str, char delim);  //(1)
+istream& getline(istream& is, MyString& str);  //
+istream& getline(istream&& is, MyString& str);  //(2)
 
 
 

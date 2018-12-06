@@ -31,9 +31,19 @@ void StringIterator::Next()
 	_current++;
 }
 
+void StringIterator::nNext(size_t n)
+{
+	_current += n;
+}
+
 void StringIterator::Previous()
 {
 	_current--;
+}
+
+void StringIterator::nPrevious(size_t n)
+{
+	_current -= n;
 }
 
 

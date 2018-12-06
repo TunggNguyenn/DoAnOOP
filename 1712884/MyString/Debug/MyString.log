@@ -1,2 +1,54 @@
-﻿  main.cpp
+﻿  MyString.cpp
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(34): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(69): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(87): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(112): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(131): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(150): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(170): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(191): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(204): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(304): warning C4244: 'return': conversion from 'double' to 'size_t', possible loss of data
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(313): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(324): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(328): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(356): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(367): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(371): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(404): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(437): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(546): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(557): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(569): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(621): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(630): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(686): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(901): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(1062): warning C4018: '<=': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(1067): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(1104): warning C4018: '>=': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(1142): warning C4018: '<=': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(1147): warning C4018: '<=': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(1184): warning C4018: '>=': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(1202): warning C4018: '<=': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(1223): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(1225): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(1249): warning C4018: '>=': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(1286): warning C4018: '<=': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(1288): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(1314): warning C4018: '>=': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(1332): warning C4018: '<=': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(1354): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(1356): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(1393): warning C4018: '>=': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(1431): warning C4018: '<=': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(1433): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(1468): warning C4018: '>=': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(1486): warning C4018: '<=': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(1553): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(1566): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(1570): warning C4018: '>': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(1894): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(224): warning C4172: returning address of local variable or temporary: MyString_assign
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(786): warning C4172: returning address of local variable or temporary: MyString_assign
   MyString.vcxproj -> C:\Users\Dell\source\repos\ĐỒ ÁN LT OOP\1712884\Debug\MyString.exe
