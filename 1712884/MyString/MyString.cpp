@@ -1598,7 +1598,7 @@ int MyString::compare(size_t pos, size_t len, const char * s, size_t n) const
 
 
 
-//----------------------------------------------------------Hàm----------------------------------------
+//----------------------------------------------------------Hàm--------------------------------------------------------------
 MyString operator+(const MyString& lhs, const MyString& rhs)
 {
 	MyString MyString_temp(lhs);
@@ -1857,22 +1857,6 @@ bool operator>=(const MyString & lhs, const char * rhs)
 	return false;
 }
 
-
-
-//ostream& operator<<(ostream& os, const MyString& str)
-//{
-//	for (int i = 0; i < str.m_size; i++)
-//	{
-//		os << str.m_pch[i];
-//	}
-//	return os;
-//}
-
-//istream& operator>>(istream& is, MyString& str)
-//{
-//	is >> str;
-//	return is;
-//}
 
 void swap(MyString & x, MyString & y)
 {

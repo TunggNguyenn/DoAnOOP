@@ -48,7 +48,9 @@ c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(1486):
 c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(1553): warning C4018: '<': signed/unsigned mismatch
 c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(1566): warning C4018: '<': signed/unsigned mismatch
 c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(1570): warning C4018: '>': signed/unsigned mismatch
-c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(1894): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(1878): warning C4018: '<': signed/unsigned mismatch
+  main.cpp
+  Generating Code...
 c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(224): warning C4172: returning address of local variable or temporary: MyString_assign
 c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(786): warning C4172: returning address of local variable or temporary: MyString_assign
   MyString.vcxproj -> C:\Users\Dell\source\repos\ĐỒ ÁN LT OOP\1712884\Debug\MyString.exe
