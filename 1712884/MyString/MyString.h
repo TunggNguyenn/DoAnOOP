@@ -2,9 +2,7 @@
 #define __MYSTRING_H__
 #include "MyIterator.h"
 
-
 #define DEFAULT_ADD_RESERVER_SIZE 15
-
 
 
 
@@ -12,23 +10,15 @@
 class MyString
 {
 private:
-//	char m_ch;
-	//char_traits<char> ch_t;
-	//allocator<char> ch_a;
-	//char& rch;
-	//const char& c_rch;
 	char *m_pch;
-//	const char* c_pch;
-//	random_access_iterator_tag y;
-//	reverse_iterator<iterator> i;
-//	reverse_iterator<iterator> q;
-//
-	//ptrdiff_t ptrdiff;
 	size_t m_size;
 	size_t m_reserved_size;
 
 public:
+	/*Member constants*/
 	static const size_t npos = -1;
+
+	/*Member functions*/
 	//constructor
 	MyString();  //default
 	MyString(const MyString& str);  //copy
@@ -38,7 +28,7 @@ public:
 	MyString(size_t n, char c);  //fill
 //	template<class InputIterator>
 //	MyString(InputIterator first, InputIterator last);
-	//MyString(initializer_list<char> il);  //initializer list             Chưa làm
+	//MyString(initializer_list<char> il);  //initializer list            
 	MyString(MyString&& str) noexcept;  //move
 
 	//destructor
@@ -48,46 +38,59 @@ public:
 	MyString& operator=(const MyString& str);  //string
 	MyString& operator=(const char* s);  //c-string
 	MyString& operator=(char c);  //character
+	//MyString& operator= (initializer_list<char> il);  //initializer list (4)	
+	MyString& operator=(MyString&& str) noexcept;  //move (5)	
+
 
 	//Iterator
-	MyIterator begin() noexcept;
-	const_MyIterator begin() const noexcept;
+	MyStringIterator begin() noexcept;  //
+	MyStringIterator end() noexcept;  //
+	Reverse_MyStringIterator rbegin() noexcept;
+	Reverse_MyStringIterator rend() noexcept;
+	const_MyStringIterator cbegin() const noexcept;  //
+	const_MyStringIterator cend() const noexcept;  //
+	const_Reverse_MyStringIterator crbegin() const noexcept;  //
+	const_Reverse_MyStringIterator crend() const noexcept;  //
 
 
 	//Capacity
-	size_t size() const noexcept;
-	size_t length() const noexcept;
-	size_t max_size() const noexcept;
-	void resize(size_t n);
-	void resize(size_t n, char c);
-	size_t capacity() const noexcept;
-	void reserve(size_t n = 0);
-	void clear() noexcept;
-	bool empty() const;
-	void shrink_to_fit();
+	size_t size() const noexcept;  //
+	size_t length() const noexcept;  //
+	size_t max_size() const noexcept;  //
+	void resize(size_t n);  //
+	void resize(size_t n, char c);  //
+	size_t capacity() const noexcept;  //
+	void reserve(size_t n = 0);  //
+	void clear() noexcept;  //
+	bool empty() const;  //
+	void shrink_to_fit();  //
+
+
 
 	//Element access
-	char& operator[](size_t pos);
-	const char& operator[](size_t pos) const;
-	char& at(size_t pos);
-	const char& at(size_t pos) const;
-	char& back();
-	const char& back() const;
-	char& front();
-	const char& front() const;
+	char& operator[](size_t pos);  //
+	const char& operator[](size_t pos) const;  //
+	char& at(size_t pos);  //
+	const char& at(size_t pos) const;  //
+	char& back();  //
+	const char& back() const;  //
+	char& front();  //
+	const char& front() const;  //
 
 	//Modifiers
 	MyString& operator+=(const MyString& str);  //string(1)
 	MyString& operator+=(const char* s);  //c-string(2)
 	MyString& operator+=(char c);  //character(3)
+	//string& operator+= (initializer_list<char> il);  //initializer list (4)
 	MyString& append(const MyString& str);  //string(1)
 	MyString& append(const MyString& str, size_t subpos, size_t sublen = npos);  //substring(2)
-	MyString& append(const char* s);  //c-string
+	MyString& append(const char* s);  //c-string(3)
 	MyString& append(const char* s, size_t n);  //buffer(4)
 	MyString& append(size_t n, char c);  //fill(5)
 	//template<class InputIterator>
 	//MyString& append(InputIterator first, InputIterator last);  //range(6)
-	void push_back(char c);
+	//MyString& append(initializer_list<char> il);  //initializer list(7)
+	void push_back(char c);  //
 	MyString& assign(const MyString& str);  //string(1)
 	MyString& assign(const MyString& str, size_t subpos, size_t sublen = npos);  //substring(2)
 	MyString& assign(const char* s);  //c-string(3)
@@ -95,18 +98,20 @@ public:
 	MyString& assign(size_t n, char c);  //fill(5)
 	//template<class InputIterator>
 	//MyString& assign(InputIterator first, InputIterator last);  //range(6)
+	MyString& assign(MyString&& str) noexcept;  //move (8)	
 	MyString& insert(size_t pos, const MyString& str);  //string (1)	
 	MyString& insert(size_t pos, const MyString& str, size_t subpos, size_t sublen = npos);  //substring(2)
 	MyString& insert(size_t pos, const char* s);  //c-string (3)	
 	MyString& insert(size_t pos, const char* s, size_t n);  //buffer (4)	
 	MyString& insert(size_t pos, size_t n, char c);  //
-	//void insert(iterator p, size_t n, char c);  //fill (5)	
-	//iterator insert(iterator p, char c);  //single character (6)
+	MyStringIterator insert(const_MyStringIterator p, size_t n, char c);  //fill (5)	
+	MyStringIterator insert(const_MyStringIterator p, char c);  //single character (6)
 	//template <class InputIterator>  //
 	//void insert(iterator p, InputIterator first, InputIterator last);  //range (7)
+	//MyString& insert(const_iterator p, initializer_list<char> il);  //initializer list (8)
 	MyString& erase(size_t pos = 0, size_t len = npos);  //sequence(1)
-	//iterator erase(const_iterator p);  //character(2)
-	//iterator erase(const_iterator first, const_iterator last);  //range
+	MyStringIterator erase(const_MyStringIterator p);  //character(2)
+	MyStringIterator erase(const_MyStringIterator first, const_MyStringIterator last);  //range
 	MyString& replace(size_t pos, size_t len, const MyString& str);  //
 	//MyString& replace(const_iterator i1, const_iterator i2, const MyString& str);  //string (1)
 	MyString& replace(size_t pos, size_t len, const MyString& str, size_t subpos, size_t sublen = npos);  //substring (2)
@@ -185,7 +190,7 @@ bool operator== (const char*   lhs, const MyString& rhs);  //
 bool operator== (const MyString& lhs, const char*   rhs);  //(1)
 
 bool operator!= (const MyString& lhs, const MyString& rhs) noexcept;  //
-bool operator!= (const char*   lhs, const string& rhs);  //
+bool operator!= (const char*   lhs, const MyString& rhs);  //
 bool operator!= (const MyString& lhs, const char*   rhs);  //(2)
 
 bool operator<  (const MyString& lhs, const MyString& rhs) noexcept;  //
@@ -214,6 +219,11 @@ istream& operator>>(istream& is, MyString& str);  //
 
 //operator<<
 ostream& operator<< (ostream& os, const MyString& str);
+
+//getline
+istream& getline(istream& is, MyString& str, char delim);  //(1)
+istream& getline(istream& is, MyString& str);  //(2)
+
 
 
 #endif // !__MYSTRING_H__

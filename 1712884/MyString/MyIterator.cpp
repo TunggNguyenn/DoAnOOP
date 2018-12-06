@@ -2,88 +2,61 @@
 
 
 
-MyIterator::MyIterator()
-{
-	this->m_it_pch = NULL;
-}
-
-MyIterator::MyIterator(char * s) : m_it_pch(s)
-{
-}
-
-MyIterator::MyIterator(const MyIterator & m_it_s) : m_it_pch(m_it_s.m_it_pch)
-{
-}
+StringIterator::StringIterator() :Iterator(), StringAggregrate(*this) {}
 
 
-MyIterator & MyIterator::operator++()
+StringIterator::StringIterator(char * myString, long current) : Iterator(), StringAggregrate(*this), _myString(myString), _current(current) {}
+
+StringIterator & StringIterator::operator=(StringIterator & stringIterator)
 {
-	++this->m_it_pch;
+	*this = stringIterator;
 	return *this;
 }
 
-MyIterator MyIterator::operator++(int)
+
+
+void StringIterator::First()
 {
-	MyIterator temp = *this;
-	this->operator++();
-	return temp;
+	_current = 0;
 }
 
-bool MyIterator::operator==(const MyIterator & m_it_s) const
+void StringIterator::Last()
 {
-	return this->m_it_pch == m_it_s.m_it_pch;
-}
-
-bool MyIterator::operator!=(const MyIterator & m_it_s) const
-{
-	return this->m_it_pch != m_it_s.m_it_pch;
-}
-
-char& MyIterator::operator*()
-{
-	return *this->m_it_pch;
+	_current = strlen(_myString) - 1;
 }
 
 
-const_MyIterator::const_MyIterator()
+void StringIterator::Next()
 {
-	this->m_it_pch = NULL;
+	_current++;
 }
 
-const_MyIterator::const_MyIterator(char * s) : m_it_pch(s)
+void StringIterator::Previous()
 {
+	_current--;
 }
 
-const_MyIterator::const_MyIterator(const const_MyIterator & m_it_s) : m_it_pch(m_it_s.m_it_pch)
+
+bool StringIterator::IsDone()
 {
+	if (_current >= strlen(_myString) || _current < 0)
+	{
+		return true;
+	}
+	return false;
 }
 
-const_MyIterator & const_MyIterator::operator++()
+char& StringIterator::CurrentItem()
 {
-	++this->m_it_pch;
-	return *this;
+	//if (IsDone())
+	//{
+	//	throw;
+	//}
+	return _myString[_current];
 }
 
-const_MyIterator const_MyIterator::operator++(int)
+size_t StringIterator::get_Current()
 {
-	const_MyIterator temp = *this;
-	this->operator++();
-	return temp;
+	return this->_current;
 }
-
-bool const_MyIterator::operator==(const const_MyIterator & m_it_s) const
-{
-	return this->m_it_pch == m_it_s.m_it_pch;
-}
-
-bool const_MyIterator::operator!=(const const_MyIterator & m_it_s) const
-{
-	return this->m_it_pch != m_it_s.m_it_pch;
-}
-
-char const_MyIterator::operator*()
-{
-	return *this->m_it_pch;
-}
-
 

@@ -218,19 +218,55 @@ MyString & MyString::operator=(char c)
 	return *this;
 }
 
-
-
-MyIterator MyString::begin() noexcept
+MyString & MyString::operator=(MyString && str) noexcept
 {
-	MyIterator myIterator(this->m_pch);
-	return myIterator;
+	MyString MyString_assign(str);
+	return MyString_assign;
 }
 
-const_MyIterator MyString::begin() const noexcept
+MyStringIterator MyString::begin() noexcept
 {
-	const_MyIterator const_myIterator(this->m_pch);
-	return const_myIterator;
+	return MyStringIterator(this->m_pch);
 }
+
+MyStringIterator MyString::end() noexcept
+{
+	return MyStringIterator(this->m_pch, this->size());
+}
+
+Reverse_MyStringIterator MyString::rbegin() noexcept
+{
+	return Reverse_MyStringIterator(this->m_pch, this->size() - 1);
+}
+
+Reverse_MyStringIterator MyString::rend() noexcept
+{
+	return Reverse_MyStringIterator(this->m_pch, -1);
+}
+
+const_MyStringIterator MyString::cbegin() const noexcept
+{
+	return const_MyStringIterator(this->m_pch);
+}
+
+const_MyStringIterator MyString::cend() const noexcept
+{
+	return const_MyStringIterator(this->m_pch, this->size());
+}
+
+const_Reverse_MyStringIterator MyString::crbegin() const noexcept
+{
+	return const_Reverse_MyStringIterator(this->m_pch, this->size() - 1);
+}
+
+const_Reverse_MyStringIterator MyString::crend() const noexcept
+{
+	return const_Reverse_MyStringIterator(this->m_pch, -1);
+}
+
+
+
+
 
 /*Capacity*/
 size_t MyString::size() const noexcept
@@ -724,6 +760,12 @@ MyString & MyString::assign(size_t n, char c)
 	}
 }
 
+MyString & MyString::assign(MyString && str) noexcept
+{
+	MyString MyString_assign(str);
+	return MyString_assign;
+}
+
 MyString & MyString::insert(size_t pos, const MyString & str)
 {
 	if (pos >= 0 && pos <= this->m_size)
@@ -809,6 +851,20 @@ MyString & MyString::insert(size_t pos, size_t n, char c)
 	}
 }
 
+MyStringIterator MyString::insert(const_MyStringIterator p, size_t n, char c)
+{
+	this->insert(p.get_Current(), n, c);
+	return MyStringIterator(this->m_pch, p.get_Current());
+}
+
+MyStringIterator MyString::insert(const_MyStringIterator p, char c)
+{
+	this->insert(p.get_Current(), 1, c);
+	return MyStringIterator(this->m_pch, p.get_Current());
+}
+
+
+
 MyString & MyString::erase(size_t pos, size_t len)
 {
 	if (pos >= 0 && pos <= this->m_size)
@@ -835,6 +891,18 @@ MyString & MyString::erase(size_t pos, size_t len)
 	{
 		throw;
 	}
+}
+
+MyStringIterator MyString::erase(const_MyStringIterator p)
+{
+	this->erase(p.get_Current(), 1);
+	return MyStringIterator(this->m_pch, p.get_Current());
+}
+
+MyStringIterator MyString::erase(const_MyStringIterator first, const_MyStringIterator last)
+{
+	this->erase(first.get_Current(), last.get_Current()-first.get_Current());
+	return MyStringIterator(this->m_pch, first.get_Current());
 }
 
 MyString & MyString::replace(size_t pos, size_t len, const MyString & str)
@@ -1614,7 +1682,7 @@ bool operator!=(const MyString & lhs, const MyString & rhs) noexcept
 	return false;
 }
 
-bool operator!=(const char * lhs, const string & rhs)
+bool operator!=(const char * lhs, const MyString & rhs)
 {
 	if (rhs.compare(lhs) != 0)
 	{
@@ -1764,10 +1832,10 @@ void swap(MyString & x, MyString & y)
 
 istream & operator>>(istream & is, MyString & str)
 {
-	char* flag = new char[1000];
-	is >> flag;
+	char* c_str = new char[256];
+	is >> c_str;
 
-	str.assign(flag);
+	str.assign(c_str);
 
 	return is;
 }
@@ -1780,3 +1848,25 @@ ostream & operator<<(ostream & os, const MyString & str)
 	}
 	return os;
 }
+
+istream & getline(istream & is, MyString & str, char delim)
+{
+	char* c_str = new char[256];
+	is.get(c_str, 256, delim);
+
+	str.append(c_str);
+
+	return is;
+}
+
+istream & getline(istream & is, MyString & str)
+{
+	char* c_str = new char[256];
+	is.get(c_str, 256);
+
+	str.append(c_str);
+
+	return is;
+}
+
+
