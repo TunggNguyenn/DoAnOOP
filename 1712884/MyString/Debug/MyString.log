@@ -1,4 +1,6 @@
-﻿  MyString.cpp
+﻿  MyIterator.cpp
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\myiterator.cpp(52): warning C4018: '>=': signed/unsigned mismatch
+  MyString.cpp
 c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(34): warning C4018: '<': signed/unsigned mismatch
 c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(69): warning C4018: '<': signed/unsigned mismatch
 c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(87): warning C4018: '<': signed/unsigned mismatch
@@ -53,4 +55,5 @@ c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(1878):
   Generating Code...
 c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(224): warning C4172: returning address of local variable or temporary: MyString_assign
 c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\mystring.cpp(786): warning C4172: returning address of local variable or temporary: MyString_assign
+c:\users\dell\source\repos\đồ án lt oop\1712884\mystring\myiterator.cpp(14): warning C4717: 'StringIterator::operator=': recursive on all control paths, function will cause runtime stack overflow
   MyString.vcxproj -> C:\Users\Dell\source\repos\ĐỒ ÁN LT OOP\1712884\Debug\MyString.exe
