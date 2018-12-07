@@ -16,34 +16,8 @@ public:
 	virtual char& CurrentItem() = 0;
 };
 
-class Aggregrate
-{
-public:
-	//	virtual Iterator<T>* createIterator() = 0;
-	//	virtual T getCurrent(int n) = 0;
-	virtual void setCurrent(char Item) = 0;
-	//	virtual size_t getSize() = 0;
-};
 
-
-class StringAggregrate : public Aggregrate
-{
-private:
-	//char* _myString;
-	//long _current;
-	Iterator* m_Iterator;
-public:
-	StringAggregrate() : Aggregrate() {};
-	StringAggregrate(Iterator* myIterator) : Aggregrate(), m_Iterator(myIterator) {};
-	void setCurrent(char Item)
-	{
-		m_Iterator->CurrentItem() = Item;
-	}
-};
-
-
-
-class StringIterator : public Iterator, public StringAggregrate
+class StringIterator : public Iterator
 {
 private:
 	char* _myString;

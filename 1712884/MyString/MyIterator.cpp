@@ -2,10 +2,10 @@
 
 
 
-StringIterator::StringIterator() :Iterator(), StringAggregrate(*this) {}
+StringIterator::StringIterator() :Iterator() {}
 
 
-StringIterator::StringIterator(char * myString, long current) : Iterator(), StringAggregrate(*this), _myString(myString), _current(current) {}
+StringIterator::StringIterator(char * myString, long current) : Iterator(), _myString(myString), _current(current) {}
 
 StringIterator & StringIterator::operator=(StringIterator & stringIterator)
 {
